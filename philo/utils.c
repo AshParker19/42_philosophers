@@ -6,17 +6,17 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:08:18 by anshovah          #+#    #+#             */
-/*   Updated: 2023/08/17 16:08:32 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/08/18 14:45:12 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *nptr)
+long int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	res;
-	int	sign;
+	int			i;
+	long int	res;
+	int			sign;
 
 	i = 0;
 	res = 0;
@@ -30,7 +30,7 @@ int	ft_atoi(const char *nptr)
 	}
 	else if (nptr[i] == '+')
 		i++;
-	while (nptr[i] >= '0' && nptr[i] <= '9' && nptr[i])
+	while (nptr[i] && nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		res *= 10;
 		res += nptr[i] - 48;

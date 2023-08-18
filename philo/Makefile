@@ -2,7 +2,7 @@ NAME = philo
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -pthread  -Wall -Werror -Wextra -g
 #TODO:FIXME: FUCKING FLAGS!!! FIXME:TODO:
 
 SRCS := $(wildcard *.c)
