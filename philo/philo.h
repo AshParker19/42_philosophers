@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:25 by anshovah          #+#    #+#             */
-/*   Updated: 2023/08/19 17:53:58 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/08/19 19:49:37 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@
 // another struct for each philo linked list
 
 typedef struct s_thinker
-{
-	pthread_t 			thought;
+{	
+	pthread_t 			idea;
 	bool				lock_status;
 	struct s_thinker 	*next;
-	struct s_thinker 	*prev;
 }				t_thinker;
 
 typedef struct s_table
@@ -36,7 +35,7 @@ typedef struct s_table
 	char 			**av;
 	pthread_mutex_t	lock;
 	size_t			thinker_counter;
-	t_thinker		*thinker;
+	t_thinker		*first_thought;
 	t_thinker		*last_thought;
 }				t_table;
 
