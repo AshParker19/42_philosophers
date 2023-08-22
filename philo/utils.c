@@ -38,3 +38,25 @@ long int	ft_atoi(const char *nptr)
 	}
 	return (res * sign);
 }
+
+size_t	get_current_time(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) < 0)
+	{
+		write (1, "gettimeofday() error\n", 22);
+		return (1);
+	}
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+int	ft_usleep(useconds_t ms)
+{
+	u_int64_t	start;
+
+	start = get_current_time();
+	while ((get_current_time() - start) < ms)
+		usleep(ms / 10);
+	return (0);	
+}

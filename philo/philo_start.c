@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:05 by anshovah          #+#    #+#             */
-/*   Updated: 2023/08/19 19:48:16 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/08/21 18:42:49 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	table_init(t_table *table, int ac, char **av)
 	table->last_thought = NULL;
 }
 
-
 t_thinker *ft_add_back(t_table *table)
 {
 	t_thinker	*new_idea;
@@ -29,7 +28,7 @@ t_thinker *ft_add_back(t_table *table)
 	new_idea = malloc(1 * sizeof(t_thinker));
 	if (!new_idea)
 		return (NULL);
-	pthread_create(&new_idea->idea, NULL, take_a_fork, (void *) table);
+	new_idea->lock_status = false;	
 	if (!table->first_thought)
 	{
 		table->last_thought = new_idea;
@@ -43,19 +42,21 @@ t_thinker *ft_add_back(t_table *table)
 	}
 }
 
-void	spawn_and_join_thinker(t_table *table)
+void*	spawn_and_join(void *arg)
+{
+	arg = NULL;
+	return (NULL);
+}
+
+void	place_thinker(t_table *table)
 {
 	static int	i;
-	t_thinker	*current;
+	pthread_t	sage;
 
 	while (i++ < ft_atoi(table->av[1]))
 		table->first_thought = ft_add_back(table);
-	current = table->first_thought;
-	while (current)
-	{
-		pthread_join(current->idea, NULL);
-		current = current->next;
-	}
+	pthread_create(&sage, NULL, spawn_and_join, (void *)table);
+	pthread_join(sage, NULL);
 }
 
 int main(int ac, char *av[])
@@ -68,8 +69,6 @@ int main(int ac, char *av[])
 		return (1);
 	}
 	table_init(&table, ac, av);
-	pthread_mutex_init(&table.lock, NULL);
-	spawn_and_join_thinker(&table);
-	pthread_mutex_destroy(&table.lock);
+	place_thinker(&table);
 }
 
