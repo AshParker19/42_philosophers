@@ -16,7 +16,6 @@ void	table_init(t_table *table, int ac, char **av)
 {
 	table->ac = ac;
 	table->av = av;
-	table->thinker_counter = 1;
 	table->first_thought = NULL;
 	table->last_thought = NULL;
 }
@@ -63,11 +62,8 @@ int main(int ac, char *av[])
 {
 	t_table table;
 
-	if ((ac > 6 || ac < 5) || parser(av))
-	{
-		printf ("Wrong arguments!\n");
+	if (!parser(ac, av))
 		return (1);
-	}
 	table_init(&table, ac, av);
 	place_thinker(&table);
 }

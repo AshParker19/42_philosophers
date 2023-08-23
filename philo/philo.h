@@ -35,14 +35,14 @@ typedef struct s_table
 {
 	int 			ac;
 	char 			**av;
-	size_t			thinker_counter;
+	bool			sage_flag;
 	t_thinker		*first_thought;
 	t_thinker		*last_thought;
 }				t_table;
 
 
 /* parsing */
-int		parser(char **av);
+int		parser(int ac, char **av);
 
 /* routines */
 

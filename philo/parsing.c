@@ -39,17 +39,25 @@ int	ft_numeric(char *str)
 	return (1);
 }
 
-int	parser(char **av)
+int	parser(int ac, char **av)
 {
 	int	i;
 
 	i = 1;
+	if (ac > 6 || ac < 5)
+	{
+		printf ("Wrong arguments!\n");
+		return (0);
+	}
 	while (av[i])
 	{
 		if (ft_strlen(av[i]) > 10 || !ft_numeric(av[i]) || 
 			ft_atoi(av[i]) > INT_MAX)
-			return (1);
+		{
+			printf ("Wrong arguments!\n");
+			return (0);
+		}
 		i++;
 	}
-	return (0);
+	return (1);
 }
