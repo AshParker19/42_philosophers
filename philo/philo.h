@@ -35,7 +35,8 @@ typedef struct s_table
 {
 	int 			ac;
 	char 			**av;
-	bool			sage_flag;
+	pthread_t		sage;
+	bool			sage_word;
 	t_thinker		*first_thought;
 	t_thinker		*last_thought;
 }				t_table;
