@@ -39,7 +39,7 @@ long int	ft_atoi(const char *nptr)
 	return (res * sign);
 }
 
-size_t	get_current_time(void)
+uint64_t	get_current_time(void)
 {
 	struct timeval	time;
 
@@ -53,7 +53,7 @@ size_t	get_current_time(void)
 
 int	ft_usleep(useconds_t ms)
 {
-	u_int64_t	start;
+	uint64_t	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < ms)

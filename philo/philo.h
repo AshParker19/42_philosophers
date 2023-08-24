@@ -19,24 +19,31 @@
 #include <limits.h>
 #include <stdbool.h>
 #include <sys/time.h>
+#include <stdint.h>
 #include <pthread.h>
+
+typedef struct s_table;
 
 /* each thinker is the node of the linked list */
 typedef struct s_thinker
 {	
 	pthread_t 			idea;
 	pthread_mutex_t		lock;
-	bool				lock_status;
+	bool				free_fork;
+	uint64_t			last_meal;
 	struct s_thinker 	*next;
+	t_table				*table;
 }				t_thinker;
 
 /* table with all the info  */
-typedef struct s_table
+struct s_table
 {
 	int 			ac;
 	char 			**av;
 	pthread_t		sage;
 	bool			sage_word;
+	bool			dead_mf;
+	uint64_t		start_time;
 	t_thinker		*first_thought;
 	t_thinker		*last_thought;
 }				t_table;
@@ -51,7 +58,7 @@ int		parser(int ac, char **av);
 /* utils */
 size_t		ft_strlen(const char *s);
 long int	ft_atoi(const char *nptr);
-size_t		get_current_time(void);
+uint64_t	get_current_time(void);
 int			ft_usleep(useconds_t ms);
 
 #endif
