@@ -12,10 +12,10 @@
 
 #include "philo.h"
 
-long int	ft_atoi(const char *nptr)
+uint64_t	ft_atoi(const char *nptr)
 {
 	int			i;
-	long int	res;
+	uint64_t	res;
 	int			sign;
 
 	i = 0;
@@ -46,12 +46,12 @@ uint64_t	get_current_time(void)
 	if (gettimeofday(&time, NULL) < 0)
 	{
 		write (1, "gettimeofday() error\n", 22);
-		return (1);
+		return (-1);
 	}
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int	ft_usleep(useconds_t ms)
+int	ft_usleep(size_t ms)
 {
 	uint64_t	start;
 
