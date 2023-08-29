@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:25 by anshovah          #+#    #+#             */
-/*   Updated: 2023/08/21 17:13:18 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/08/29 22:55:30 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,9 @@ struct s_table;
 typedef struct s_thinker
 {	
 	pthread_t 			idea;
-	pthread_mutex_t		fork;
-	bool				free_fork;
 	int 				thinker_id;
 	int					meal_count;
 	uint64_t			last_meal;
-	bool				first;
-	bool				last;
 	struct s_table		*table;
 	struct s_thinker 	*next;
 }				t_thinker;
@@ -41,12 +37,15 @@ typedef struct s_thinker
 /* table with all the info  */
 typedef struct s_table
 {
-	int 			ac;
-	char 			**av;
 	pthread_t		sage;
 	bool			sage_word;
-	bool			dead_mf;
+	pthread_mutex_t	*forks;
+	uint64_t		thinker_num;
 	uint64_t		start_time;
+	uint64_t		time_to_die;
+	uint64_t		time_to_eat;
+	uint64_t		time_to_sleep;
+	uint64_t		meal_num;
 	t_thinker		*first_thought;
 	t_thinker		*last_thought;
 }				t_table;
@@ -55,8 +54,11 @@ typedef struct s_table
 /* parsing */
 int		parser(int ac, char **av);
 
-/* routines */
-
+/* philo utils */
+void		table_init(t_table *table, char **av);
+t_thinker 	*ft_add_back(t_table *table, int i);
+void		join_thinkers(t_table *table);
+void		destroy_and_free(t_table *table);
 
 /* utils */
 size_t		ft_strlen(const char *s);
