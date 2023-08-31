@@ -6,25 +6,29 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 17:14:39 by anshovah          #+#    #+#             */
-/*   Updated: 2023/08/29 22:55:36 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/08/31 23:21:03 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	table_init(t_table *table, char **av)
+void	table_init(t_table *table, int ac, char **av, int i)
 {
-	table->sage_word = false;
+	table->ac = ac;
 	table->start_time = get_current_time();
 	table->thinker_num = ft_atoi(av[1]);
 	table->forks = malloc(table->thinker_num * sizeof(pthread_mutex_t));
 	if (!table->forks)
 		return ;
+	while (++i)
+		pthread_mutex_init(&table->forks[i], NULL);
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
-	if (av[5])
+	if (ac == 6)
 		table->meal_num = ft_atoi(av[5]);
+	else
+		table->meal_num = -1;	
 	table->first_thought = NULL;
 	table->last_thought = NULL;
 }
@@ -37,7 +41,7 @@ t_thinker *ft_add_back(t_table *table, int i)
 	if (!new_idea)
 		return (NULL);
 	new_idea->table = table;
-	new_idea->thinker_id = i;
+	new_idea->id = i;
 	pthread_mutex_init(&table->forks[i], NULL);
 	if (!table->first_thought)
 	{
