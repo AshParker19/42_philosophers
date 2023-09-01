@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 17:14:39 by anshovah          #+#    #+#             */
-/*   Updated: 2023/08/31 23:21:03 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/01 00:06:34 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	table_init(t_table *table, int ac, char **av, int i)
 	table->ac = ac;
 	table->start_time = get_current_time();
 	table->thinker_num = ft_atoi(av[1]);
-	table->forks = malloc(table->thinker_num * sizeof(pthread_mutex_t));
+	table->forks = ft_calloc(table->thinker_num, sizeof(pthread_mutex_t));
 	if (!table->forks)
 		return ;
 	while (++i)
@@ -37,7 +37,7 @@ t_thinker *ft_add_back(t_table *table, int i)
 {
 	t_thinker	*new_idea;
 	
-	new_idea = malloc(1 * sizeof(t_thinker));
+	new_idea = ft_calloc(1, sizeof(t_thinker));
 	if (!new_idea)
 		return (NULL);
 	new_idea->table = table;

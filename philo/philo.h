@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:25 by anshovah          #+#    #+#             */
-/*   Updated: 2023/08/31 23:19:19 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/01 00:05:19 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void		destroy_and_free(t_table *table);
 /* utils */
 size_t		ft_strlen(const char *s);
 uint64_t 	ft_atoi(const char *nptr);
+void		*ft_calloc(size_t nmemb, size_t size);
+void		ft_bzero(void *s, size_t n);
 uint64_t	get_current_time(void);
 int			ft_usleep(size_t ms);
 

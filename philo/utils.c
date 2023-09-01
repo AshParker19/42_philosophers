@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:08:18 by anshovah          #+#    #+#             */
-/*   Updated: 2023/08/18 14:45:12 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/01 00:04:47 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,26 @@ uint64_t	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (res * sign);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*p;
+
+	p = malloc(nmemb * size);
+	if (!p)
+		return (NULL);
+	ft_bzero(p, nmemb * size);
+	return (p);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	char	*copy;
+
+	copy = s;
+	while (n--)
+		*copy++ = '\0';
 }
 
 uint64_t	get_current_time(void)
