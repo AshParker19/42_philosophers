@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 17:14:39 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/01 00:06:34 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/02 16:18:35 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	table_init(t_table *table, int ac, char **av, int i)
 {
 	table->ac = ac;
+	table->dead = false;
 	table->start_time = get_current_time();
 	table->thinker_num = ft_atoi(av[1]);
 	table->forks = ft_calloc(table->thinker_num, sizeof(pthread_mutex_t));
@@ -22,6 +23,8 @@ void	table_init(t_table *table, int ac, char **av, int i)
 		return ;
 	while (++i)
 		pthread_mutex_init(&table->forks[i], NULL);
+	pthread_mutex_init(&table->food_status, NULL);	
+	pthread_mutex_init(&table->life_status, NULL);	
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
@@ -33,7 +36,7 @@ void	table_init(t_table *table, int ac, char **av, int i)
 	table->last_thought = NULL;
 }
 
-t_thinker *ft_add_back(t_table *table, int i)
+t_thinker *ft_add_back(t_table *table, uint64_t i)
 {
 	t_thinker	*new_idea;
 	
@@ -42,7 +45,7 @@ t_thinker *ft_add_back(t_table *table, int i)
 		return (NULL);
 	new_idea->table = table;
 	new_idea->id = i;
-	pthread_mutex_init(&table->forks[i], NULL);
+	new_idea->meal_count = 0;
 	if (!table->first_thought)
 	{
 		table->first_thought = new_idea;

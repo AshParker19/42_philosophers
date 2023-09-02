@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:08:18 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/01 00:04:47 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/02 03:38:08 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ uint64_t	get_current_time(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) < 0)
-	{
-		write (1, "gettimeofday() error\n", 22);
-		return (-1);
-	}
+		printf ("gettimeofday() error\n");
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
