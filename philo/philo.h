@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:25 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/02 19:07:48 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/03 16:23:56 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@
 # define RESET 			"\033[0m"
 
 /* action logs */
-# define FORK	YELLOW"has taken a fork\n"
-# define EAT	PURPLE"is eating\n"
-# define SLEEP	BLUE"is sleeping\n"
-# define THINK	B_WHITE"is thinking\n"
-# define DIE	RED"died\n"
+# define FORK	YELLOW"has taken a fork"RESET
+# define EAT	PURPLE"is eating"RESET
+# define SLEEP	BLUE"is sleeping"RESET
+# define THINK	B_WHITE"is thinking"RESET
+# define DIE	RED"died"RESET
 
 struct s_table;
 
@@ -67,8 +67,7 @@ typedef struct s_table
 	int				ac;
 	bool			dead;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	life_status;
-	pthread_mutex_t	food_status;
+	pthread_mutex_t	print;
 	uint64_t		thinker_num;
 	uint64_t		start_time;
 	uint64_t		time_to_die;
