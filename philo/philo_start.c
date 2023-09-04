@@ -6,17 +6,16 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:05 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/03 20:11:34 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/04 22:23:34 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	my_sleep(t_thinker *thinker, time_t time)
+void	sleep_time(uint64_t time)
 {
-	(void)thinker;
-	time_t	start;
-	time_t	now;
+	uint64_t	start;
+	uint64_t	now;
 
 	start = get_current_time();
 	while (1)
@@ -27,7 +26,6 @@ void	my_sleep(t_thinker *thinker, time_t time)
 		usleep(100);
 	}
 }
-void	existence_phase(t_thinker *thinker, bool fork_status);
 
 void	log_action(t_thinker *thinker, char *action)
 {
@@ -45,49 +43,44 @@ void	log_action(t_thinker *thinker, char *action)
 
 void	pick_up_forks(t_thinker *thinker)
 {
-	pthread_mutex_lock(&thinker->table->forks[thinker->id - 1]);
+	pthread_mutex_lock(&thinker->table->forks[thinker->id]);
 	log_action(thinker, FORK);	
 	if (thinker->id == (int)thinker->table->thinker_num)
 		pthread_mutex_lock(&thinker->table->forks[0]);
 	else
-		pthread_mutex_lock(&thinker->table->forks[thinker->id]);
+		pthread_mutex_lock(&thinker->table->forks[thinker->id + 1]);
 	log_action(thinker, FORK);
 }
 
 void	eat(t_thinker *thinker)
 {
+	pthread_mutex_lock(&thinker->lock);
 	thinker->last_meal = get_current_time();
+	pthread_mutex_unlock(&thinker->lock);
 	thinker->meal_count++;
 	log_action(thinker, EAT);
-	my_sleep(thinker, thinker->table->time_to_eat);
+	sleep_time(thinker->table->time_to_eat);
 }
 
 void	put_down_forks(t_thinker *thinker)
 {
-	pthread_mutex_unlock(&thinker->table->forks[thinker->id - 1]);
+	pthread_mutex_unlock(&thinker->table->forks[thinker->id]);
 	if (thinker->id == (int)thinker->table->thinker_num)
 		pthread_mutex_unlock(&thinker->table->forks[0]);
 	else	
-		pthread_mutex_unlock(&thinker->table->forks[thinker->id]);
+		pthread_mutex_unlock(&thinker->table->forks[thinker->id + 1]);
 }
 
-
-void	think(t_thinker *thinker)
+void	existence_phase(t_thinker *thinker)
 {
-	log_action(thinker, THINK);
-}
-
-void	existence_phase(t_thinker *thinker, bool fork_status)
-{
-	(void)fork_status;
 	while (!thinker->table->dead)
 	{
 		pick_up_forks(thinker);
 		eat(thinker);
 		put_down_forks(thinker);
-		my_sleep(thinker, thinker->table->time_to_sleep);
+		sleep_time(thinker->table->time_to_sleep);
 		log_action(thinker, EAT);
-		think(thinker);
+		log_action(thinker, THINK);
 	}
 }
 
@@ -98,12 +91,9 @@ void	*thinking_process(void *arg)
 	thinker = (t_thinker *)arg;
 	if (thinker->id % 2)
 		ft_usleep(thinker->table->thinker_num);
-	existence_phase(thinker, 0);
+	existence_phase(thinker);
 	return (NULL);
 } 
-
-// get_current_time() - current->last_meal >= table->time_to_die
-// get_current_time() - table->start_time, current->id
 
 void	death_check(t_table *table)
 {
@@ -113,10 +103,13 @@ void	death_check(t_table *table)
 
 	while (!table->dead)
 	{
+		pthread_mutex_lock(&table->print);
 		current = table->first_thought;
+		pthread_mutex_unlock(&table->print);
 		while (current)
 		{
-			now = get_current_time() - current->table->start_time;
+			pthread_mutex_lock(&current->lock);
+			now = get_current_time() - table->start_time;
 			if (now >= current->last_meal + table->time_to_die)
 			{
 				timestamp = get_current_time() - current->table->start_time;
@@ -125,6 +118,7 @@ void	death_check(t_table *table)
 				table->dead = true;
 				break ;
 			}
+			pthread_mutex_unlock(&current->lock);
 			current = current->next;
 		}
 	}
@@ -161,10 +155,8 @@ int main(int ac, char *av[])
 {
 	t_table table;
 
-
 	if (!parser(ac, av))
 		return (1);
 	table_init(&table, ac, av, -1);
 	organize_table(&table);
 }
-

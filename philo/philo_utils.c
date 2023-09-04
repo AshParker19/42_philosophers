@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 17:14:39 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/03 16:40:16 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:29:59 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_thinker *ft_add_back(t_table *table, uint64_t i)
 	new_idea->id = i;
 	new_idea->meal_count = 0;
 	new_idea->last_meal = 0;
+	pthread_mutex_init(&new_idea->lock, NULL);
 	if (!table->first_thought)
 	{
 		table->first_thought = new_idea;
@@ -75,12 +76,19 @@ void	join_thinkers(t_table *table)
 void	destroy_and_free(t_table *table)
 {
 	uint64_t	i;
+	t_thinker	*current;
 
 	i = 0;
 	while (i < table->thinker_num)
 	{
 		pthread_mutex_destroy(&table->forks[i]);
 		i++;
+	}
+	current = table->first_thought;
+	while (current)
+	{
+		pthread_mutex_destroy(&current->lock);
+		current = current->next;
 	}
 	pthread_mutex_destroy(&table->print);
 }

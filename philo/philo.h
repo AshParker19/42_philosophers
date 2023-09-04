@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:25 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/03 16:23:56 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/04 22:07:29 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_thinker
 	int 				id;
 	int					meal_count;
 	uint64_t			last_meal;
+	pthread_mutex_t		lock;
 	struct s_table		*table;
 	struct s_thinker 	*next;
 }				t_thinker;
