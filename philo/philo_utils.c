@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 17:14:39 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/04 20:29:59 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/05 17:44:27 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	table_init(t_table *table, int ac, char **av, int i)
 		return ;
 	while (++i)
 		pthread_mutex_init(&table->forks[i], NULL);
-	pthread_mutex_init(&table->print, NULL);
+	pthread_mutex_init(&table->key, NULL);
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
@@ -90,5 +90,5 @@ void	destroy_and_free(t_table *table)
 		pthread_mutex_destroy(&current->lock);
 		current = current->next;
 	}
-	pthread_mutex_destroy(&table->print);
+	pthread_mutex_destroy(&table->key);
 }
