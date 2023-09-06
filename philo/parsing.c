@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:57:16 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/04 20:52:41 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/06 18:05:34 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	parser(int ac, char **av)
 	int	i;
 
 	i = 1;
-	if (ac > 6 || ac < 5)
+	if (ac > 6 || ac < 5 || ft_atoi(av[1]) == 0)
 	{
 		printf ("Wrong arguments!\n");
 		return (0);
