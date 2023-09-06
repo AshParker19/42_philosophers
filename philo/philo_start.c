@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:05 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/06 17:59:31 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/06 22:43:27 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	eat(t_thinker *thinker)
 {
 	pthread_mutex_lock(&thinker->lock);
 	thinker->last_meal = get_current_time();
-	pthread_mutex_unlock(&thinker->lock);
 	thinker->meal_count++;
+	pthread_mutex_unlock(&thinker->lock);
 	log_action(thinker, EAT);
 	sleep_time(thinker->table->time_to_eat);
 	log_action(thinker, SLEEP);
@@ -82,14 +82,17 @@ void	put_down_forks(t_thinker *thinker)
 	pthread_mutex_unlock(&thinker->table->forks[thinker->id - 1]);
 }
 
+
 void	existence(t_thinker *thinker)
 {
-	bool	temp;
-
-	while (!thinker->table->dead)
-	{
+	while (1)
+	{	
 		pthread_mutex_lock(&thinker->table->key);
-		temp = thinker->table->dead;
+		if (thinker->table->dead)
+		{
+			pthread_mutex_unlock(&thinker->table->key);
+			break ;
+		}
 		pthread_mutex_unlock(&thinker->table->key);
 		pick_up_forks(thinker);
 		eat(thinker);
@@ -125,10 +128,10 @@ void	death_check(t_table *table)
 		{
 			pthread_mutex_lock(&current->lock);
 			now = get_current_time() - table->start_time;
-			if (now >= (current->last_meal - table->start_time) + table->time_to_die)
+			if (now > (current->last_meal - table->start_time) + table->time_to_die)
 			{
 				timestamp = get_current_time() - current->table->start_time;
-				printf (CYAN"%ld\t" GREEN"%d\t" RESET"%s\n",
+				printf (CYAN"%ld\t" GREEN"%d\t%s\n",
 				timestamp, current->id, "\033[0;31mdied\033[0m");
 				pthread_mutex_lock(&table->key);
 				table->dead = true;

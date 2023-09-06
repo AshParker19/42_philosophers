@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:25 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/05 19:41:38 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/06 21:42:24 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_table
 	uint64_t		time_to_die;
 	uint64_t		time_to_eat;
 	uint64_t		time_to_sleep;
-	uint64_t		meal_num;
+	int				meal_num;
 	t_thinker		*first_thought;
 	t_thinker		*last_thought;
 }				t_table;

@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:57:16 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/06 18:05:34 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/06 21:30:18 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	parser(int ac, char **av)
 	i = 1;
 	if (ac > 6 || ac < 5 || ft_atoi(av[1]) == 0)
 	{
-		printf ("Wrong arguments!\n");
+		printf (RED"Wrong arguments!\n"RESET);
 		return (0);
 	}
 	while (av[i])
@@ -54,7 +54,8 @@ int	parser(int ac, char **av)
 		if (ft_strlen(av[i]) > 10 || !ft_numeric(av[i]) || 
 			ft_atoi(av[i]) > INT_MAX)
 		{
-			printf ("Wrong arguments!\n");
+			
+			printf (RED"Wrong arguments!\n"RESET);
 			return (0);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:08:18 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/03 16:43:58 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/06 22:41:10 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,3 +77,23 @@ int	ft_usleep(size_t ms)
 		usleep(ms / 10);
 	return (0);	
 }
+
+
+// void	existence(t_thinker *thinker)
+// {
+// 	while (1)
+// 	{	
+// 		pthread_mutex_lock(&thinker->table->key);
+// 		if (thinker->table->dead)
+// 		{
+// 			pthread_mutex_unlock(&thinker->table->key);
+// 			break ;
+// 		}
+// 		pthread_mutex_unlock(&thinker->table->key);
+// 		pick_up_forks(thinker);
+// 		eat(thinker);
+// 		put_down_forks(thinker);
+// 		sleep_time(thinker->table->time_to_sleep);
+// 		log_action(thinker, THINK);
+// 	}
+// }

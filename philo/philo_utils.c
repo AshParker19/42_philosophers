@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 17:14:39 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/05 17:44:27 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/06 20:48:12 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,19 @@ void	destroy_and_free(t_table *table)
 {
 	uint64_t	i;
 	t_thinker	*current;
+	t_thinker	*temp;
 
-	i = 0;
-	while (i < table->thinker_num)
-	{
+	i = -1;
+	while (++i < table->thinker_num)
 		pthread_mutex_destroy(&table->forks[i]);
-		i++;
-	}
+	free (table->forks);	
 	current = table->first_thought;
 	while (current)
-	{
-		pthread_mutex_destroy(&current->lock);
+	{	
+		temp = current;
 		current = current->next;
+		pthread_mutex_destroy(&temp->lock);
+		free(temp);
 	}
 	pthread_mutex_destroy(&table->key);
 }
