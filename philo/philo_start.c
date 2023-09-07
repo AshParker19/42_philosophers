@@ -6,26 +6,11 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:05 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/06 22:43:27 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/07 17:33:29 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	sleep_time(uint64_t time)
-{
-	uint64_t	start;
-	uint64_t	now;
-
-	start = get_current_time();
-	while (1)
-	{
-		now = get_current_time();
-		if (now - start >= time)
-			break ;
-		usleep(100);
-	}
-}
 
 void	log_action(t_thinker *thinker, char *action)
 {
@@ -69,7 +54,7 @@ void	eat(t_thinker *thinker)
 	thinker->meal_count++;
 	pthread_mutex_unlock(&thinker->lock);
 	log_action(thinker, EAT);
-	sleep_time(thinker->table->time_to_eat);
+	ft_usleep(thinker->table->time_to_eat);
 	log_action(thinker, SLEEP);
 }
 
@@ -86,7 +71,7 @@ void	put_down_forks(t_thinker *thinker)
 void	existence(t_thinker *thinker)
 {
 	while (1)
-	{	
+	{
 		pthread_mutex_lock(&thinker->table->key);
 		if (thinker->table->dead)
 		{
@@ -97,8 +82,16 @@ void	existence(t_thinker *thinker)
 		pick_up_forks(thinker);
 		eat(thinker);
 		put_down_forks(thinker);
-		sleep_time(thinker->table->time_to_sleep);
+		ft_usleep(thinker->table->time_to_sleep);
 		log_action(thinker, THINK);
+		usleep(50);
+		pthread_mutex_lock(&thinker->lock);
+		if (thinker->meal_count != -1 && thinker->meal_count == thinker->table->meal_num)
+		{
+			pthread_mutex_unlock(&thinker->lock);
+			break ;
+		}
+		pthread_mutex_unlock(&thinker->lock);
 	}
 }
 
@@ -128,7 +121,7 @@ void	death_check(t_table *table)
 		{
 			pthread_mutex_lock(&current->lock);
 			now = get_current_time() - table->start_time;
-			if (now > (current->last_meal - table->start_time) + table->time_to_die)
+			if (now >= (current->last_meal - table->start_time) + table->time_to_die)
 			{
 				timestamp = get_current_time() - current->table->start_time;
 				printf (CYAN"%ld\t" GREEN"%d\t%s\n",

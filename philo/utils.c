@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:08:18 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/06 22:41:10 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:51:48 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,30 @@ uint64_t	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int	ft_usleep(size_t ms)
+void	ft_usleep(uint64_t time)
 {
 	uint64_t	start;
+	uint64_t	now;
 
 	start = get_current_time();
-	while ((get_current_time() - start) < ms)
-		usleep(ms / 10);
-	return (0);	
+	while (1)
+	{
+		now = get_current_time();
+		if (now - start >= time)
+			break ;
+		usleep(1);
+	}
 }
+
+// int	ft_usleep(size_t ms)
+// {
+// 	uint64_t	start;
+
+// 	start = get_current_time();
+// 	while ((get_current_time() - start) < ms)
+// 		usleep(ms / 10);
+// 	return (0);	
+// }
 
 
 // void	existence(t_thinker *thinker)

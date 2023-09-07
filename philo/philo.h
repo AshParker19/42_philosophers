@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:25 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/06 21:42:24 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:02:11 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ uint64_t 	ft_atoi(const char *nptr);
 void		*ft_calloc(size_t nmemb, size_t size);
 void		ft_bzero(void *s, size_t n);
 uint64_t	get_current_time(void);
-int			ft_usleep(size_t ms);
+void		ft_usleep(uint64_t time);
 
 #endif
