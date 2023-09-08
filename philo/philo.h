@@ -77,6 +77,7 @@ int		parser(int ac, char **av);
 /* philo utils */
 void		table_init(t_table *table, int ac, char **av, int i);
 t_thinker 	*ft_add_back(t_table *table, uint64_t  i);
+void		log_action(t_thinker *thinker, char *action);
 void		join_thinkers(t_table *table);
 void		destroy_and_free(t_table *table);
 

@@ -82,33 +82,3 @@ void	ft_usleep(uint64_t time)
 		usleep(1);
 	}
 }
-
-// int	ft_usleep(size_t ms)
-// {
-// 	uint64_t	start;
-
-// 	start = get_current_time();
-// 	while ((get_current_time() - start) < ms)
-// 		usleep(ms / 10);
-// 	return (0);	
-// }
-
-
-// void	existence(t_thinker *thinker)
-// {
-// 	while (1)
-// 	{	
-// 		pthread_mutex_lock(&thinker->table->key);
-// 		if (thinker->table->dead)
-// 		{
-// 			pthread_mutex_unlock(&thinker->table->key);
-// 			break ;
-// 		}
-// 		pthread_mutex_unlock(&thinker->table->key);
-// 		pick_up_forks(thinker);
-// 		eat(thinker);
-// 		put_down_forks(thinker);
-// 		sleep_time(thinker->table->time_to_sleep);
-// 		log_action(thinker, THINK);
-// 	}
-// }

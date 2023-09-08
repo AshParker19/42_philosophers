@@ -2,7 +2,7 @@ NAME = philo
 
 CC = cc
 
-CFLAGS = -pthread  -Wall -Werror -Wextra -g -fsanitize=thread 
+CFLAGS = -pthread  -Wall -Werror -Wextra -g #-fsanitize=thread 
 
 SRCS := $(wildcard *.c)
 
@@ -25,11 +25,10 @@ all : $(NAME)
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@rm -f $(OBJS) #TODO:FIXME: REMOVE THIS SHIT!!! FIXME:TODO:
-	@echo "$(BLUE)   / \\__"
-	@echo "$(BLUE)  (    @\____"
-	@echo "$(PURPLE)  /         O"
-	@echo "$(PURPLE) /   (_____/"
-	@echo "$(PURPLE)/_____/   $(RED)U$(RESET)"
+	@echo "$(BLUE)  ┓ •┓       ┓        "
+	@echo "$(BLUE)┏┓┣┓┓┃┏┓┏┏┓┏┓┣┓┏┓┏┓┏┓┏"
+	@echo "$(PURPLE)┣┛┛┗┗┗┗┛┛┗┛┣┛┛┗┗ ┛ ┗ ┛"
+	@echo "$(PURPLE)┛          ┛          $(RESET)"
 
 
 %.o: %.c

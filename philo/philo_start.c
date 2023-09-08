@@ -12,20 +12,6 @@
 
 #include "philo.h"
 
-void	log_action(t_thinker *thinker, char *action)
-{
-	uint64_t	timestamp;
-	
-	pthread_mutex_lock(&thinker->table->key);
-	if (!thinker->table->dead)
-	{
-		timestamp = get_current_time() - thinker->table->start_time;
-		printf (CYAN"%ld\t" GREEN"%d\t" RESET"%s\n",
-			timestamp, thinker->id, action);
-	}
-	pthread_mutex_unlock(&thinker->table->key);
-}
-
 void	pick_up_forks(t_thinker *thinker)
 {
 	int	left_fork;
@@ -111,17 +97,20 @@ void	death_check(t_table *table)
 	t_thinker	*current;
 	uint64_t	now;
 	uint64_t	timestamp;
+	uint64_t	all_ate;
 
 	while (!table->dead)
 	{
 		pthread_mutex_lock(&table->key);
 		current = table->first_thought;
 		pthread_mutex_unlock(&table->key);
+		all_ate = 0;
 		while (current)
 		{
 			pthread_mutex_lock(&current->lock);
 			now = get_current_time() - table->start_time;
-			if (now >= (current->last_meal - table->start_time) + table->time_to_die)
+			if (now >= (current->last_meal - table->start_time) + table->time_to_die
+				&& (table->meal_num == -1 || current->meal_count < table->meal_num))
 			{
 				timestamp = get_current_time() - current->table->start_time;
 				printf (CYAN"%ld\t" GREEN"%d\t%s\n",
@@ -132,9 +121,13 @@ void	death_check(t_table *table)
 				pthread_mutex_unlock(&current->lock);
 				break ;
 			}
+			else if (table->meal_num != -1 && current->meal_count == table->meal_num)
+				all_ate++;
 			pthread_mutex_unlock(&current->lock);
 			current = current->next;
 		}
+		if (all_ate == table->thinker_num)
+			break ;
 	}
 }
 
@@ -145,15 +138,7 @@ void	organize_table(t_table *table)
 
 	i = 1;
 	while (i <= table->thinker_num)
-		table->first_thought = ft_add_back(table, i++);
-	if (table->thinker_num == 1)
-	{
-		log_action(table->first_thought, FORK);
-		ft_usleep(table->time_to_die);
-		log_action(table->first_thought, DIE);
-		table->dead = true;
-		return ;
-	}	
+		table->first_thought = ft_add_back(table, i++);	
 	current = table->first_thought;
 	while (current)
 	{
@@ -165,12 +150,21 @@ void	organize_table(t_table *table)
 	destroy_and_free(table);
 }
 
+int	one_thinker(uint64_t time)
+{
+	printf (CYAN"0\t" GREEN"1\t" YELLOW"has taken a fork\n" RESET);
+	printf (CYAN"%lu\t" GREEN"1\t" RED"died\n" RESET, time);
+	return (0);
+}
+
 int main(int ac, char *av[])
 {
 	t_table table;
 
 	if (!parser(ac, av))
 		return (1);
+	if (ft_atoi(av[1]) == 1)
+		return (one_thinker(ft_atoi(av[2])));	
 	table_init(&table, ac, av, -1);
 	organize_table(&table);
 }

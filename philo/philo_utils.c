@@ -61,6 +61,20 @@ t_thinker *ft_add_back(t_table *table, uint64_t i)
 	}
 }
 
+void	log_action(t_thinker *thinker, char *action)
+{
+	uint64_t	timestamp;
+	
+	pthread_mutex_lock(&thinker->table->key);
+	if (!thinker->table->dead)
+	{
+		timestamp = get_current_time() - thinker->table->start_time;
+		printf (CYAN"%ld\t" GREEN"%d\t" RESET"%s\n",
+			timestamp, thinker->id, action);
+	}
+	pthread_mutex_unlock(&thinker->table->key);
+}
+
 void	join_thinkers(t_table *table)
 {
 	t_thinker	*current;
@@ -81,7 +95,10 @@ void	destroy_and_free(t_table *table)
 
 	i = -1;
 	while (++i < table->thinker_num)
+	{
+		usleep(10);
 		pthread_mutex_destroy(&table->forks[i]);
+	}
 	free (table->forks);	
 	current = table->first_thought;
 	while (current)
