@@ -2,7 +2,7 @@ NAME = philo
 
 CC = cc
 
-CFLAGS = -pthread  -Wall -Werror -Wextra -g -fsanitize=thread 
+CFLAGS = -pthread  -Wall -Werror -Wextra -g #-fsanitize=thread 
 
 SRCS := $(wildcard *.c)
 
@@ -15,8 +15,6 @@ ORANGE = 	\033[0;33m
 BLUE   = 	\033[34m
 PURPLE = 	\033[35m
 RESET  = 	\033[0m
-
-###############################################################
 
 .PHONY: all clean fclean re
 

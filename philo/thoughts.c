@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thoughts1.c                                        :+:      :+:    :+:   */
+/*   thoughts.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 17:14:39 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/09 00:26:25 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/09 21:27:07 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	destroy_and_free(t_table *table)
 	t_thinker	*temp;
 
 	i = -1;
-	while (++i < table->thinker_num)
+	while (table->thinker_num > 1 && ++i < table->thinker_num)
 	{
 		usleep(10);
 		pthread_mutex_destroy(&table->forks[i]);

@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:25 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/09 02:29:38 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/09 21:05:49 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void		death_check(t_table *table);
 void		organize_table(t_table *table);
 
 /* thinker utils */
-int			one_thinker(uint64_t time);
+void		one_thinker(uint64_t time);
 int			table_init(t_table *table, int ac, char **av, int i);
 t_thinker	*ft_add_back(t_table *table, uint64_t i);
 void		log_action(t_thinker *thinker, char *action);
