@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utils.c                                      :+:      :+:    :+:   */
+/*   thoughts1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 17:14:39 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/06 20:48:12 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/09 00:26:25 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "thinker.h"
 
-void	table_init(t_table *table, int ac, char **av, int i)
+int	table_init(t_table *table, int ac, char **av, int i)
 {
 	table->ac = ac;
 	table->dead = false;
@@ -20,7 +20,7 @@ void	table_init(t_table *table, int ac, char **av, int i)
 	table->thinker_num = ft_atoi(av[1]);
 	table->forks = ft_calloc(table->thinker_num, sizeof(pthread_mutex_t));
 	if (!table->forks)
-		return ;
+		return (0);
 	while (++i)
 		pthread_mutex_init(&table->forks[i], NULL);
 	pthread_mutex_init(&table->key, NULL);
@@ -30,15 +30,16 @@ void	table_init(t_table *table, int ac, char **av, int i)
 	if (ac == 6)
 		table->meal_num = ft_atoi(av[5]);
 	else
-		table->meal_num = -1;	
+		table->meal_num = -1;
 	table->first_thought = NULL;
 	table->last_thought = NULL;
+	return (1);
 }
 
-t_thinker *ft_add_back(t_table *table, uint64_t i)
+t_thinker	*ft_add_back(t_table *table, uint64_t i)
 {
 	t_thinker	*new_idea;
-	
+
 	new_idea = ft_calloc(1, sizeof(t_thinker));
 	if (!new_idea)
 		return (NULL);
@@ -64,7 +65,7 @@ t_thinker *ft_add_back(t_table *table, uint64_t i)
 void	log_action(t_thinker *thinker, char *action)
 {
 	uint64_t	timestamp;
-	
+
 	pthread_mutex_lock(&thinker->table->key);
 	if (!thinker->table->dead)
 	{
@@ -99,10 +100,10 @@ void	destroy_and_free(t_table *table)
 		usleep(10);
 		pthread_mutex_destroy(&table->forks[i]);
 	}
-	free (table->forks);	
+	free (table->forks);
 	current = table->first_thought;
 	while (current)
-	{	
+	{
 		temp = current;
 		current = current->next;
 		pthread_mutex_destroy(&temp->lock);

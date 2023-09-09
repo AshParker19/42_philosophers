@@ -6,11 +6,11 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:57:16 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/06 21:30:18 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:02:15 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "thinker.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -54,7 +54,6 @@ int	parser(int ac, char **av)
 		if (ft_strlen(av[i]) > 10 || !ft_numeric(av[i]) || 
 			ft_atoi(av[i]) > INT_MAX)
 		{
-			
 			printf (RED"Wrong arguments!\n"RESET);
 			return (0);
 		}

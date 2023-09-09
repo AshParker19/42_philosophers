@@ -6,11 +6,11 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:08:18 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/07 15:51:48 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/08 17:55:42 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "thinker.h"
 
 uint64_t	ft_atoi(const char *nptr)
 {
