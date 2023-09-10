@@ -62,15 +62,15 @@ fclean : clean
 	@rm -f $(NAME)
 
 norm : 
-	@echo "$(ORANGE)******************************$(GREEN)"
+	@echo "$(ORANGE)******************************"
 	@echo "$(BLUE)      CHECK SOURSE FILES$(RESET)"
-	@echo "$(ORANGE)******************************$(GREEN)"
+	@echo "$(ORANGE)******************************$(PURPLE)"
 	@norminette $(SRCS)
-	@echo "$(ORANGE)******************************$(GREEN)"
+	@echo "$(ORANGE)******************************"
 	@echo "$(BLUE)        CHECK INCLUDES$(RESET)"
-	@echo "$(ORANGE)******************************$(GREEN)"
+	@echo "$(ORANGE)******************************$(PURPLE)"
 	@norminette $(INCLUDES)
-	@echo "$(ORANGE)******************************$(BLUE)"
+	@echo "$(ORANGE)******************************$(GREEN)"
 	@echo "        NO NORM ERRORS$(RESET)"
 	@echo "$(ORANGE)******************************$(DEF)"
 
