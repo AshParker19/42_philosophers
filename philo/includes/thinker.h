@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:25 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/09 21:05:49 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/09 21:35:21 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@
 # define RESET 			"\033[0m"
 
 /* action logs */
-# define FORK	"\x1b[33mhas taken a fork\033[0m"
-# define EAT	"\x1b[35mis eating\033[0m"
-# define SLEEP	"\x1b[34mis sleeping\033[0m"
-# define THINK	"\033[38;5;203mis thinking\033[0m"
-# define DIE	"\033[0;31mdied\033[0m"
+# define FORK			"\x1b[33mhas taken a fork\033[0m"
+# define EAT			"\x1b[35mis eating\033[0m"
+# define SLEEP			"\x1b[34mis sleeping\033[0m"
+# define THINK			"\033[38;5;203mis thinking\033[0m"
+# define DIE			"\033[0;31mdied\033[0m"
 
 /* errors */
 # define PARSING_ERROR	1
