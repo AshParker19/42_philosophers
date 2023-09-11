@@ -10,8 +10,8 @@ NAME = philo_bonus
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -g -pthread -fsanitize=address
-
+CFLAGS = -g -pthread #-fsanitize=address #-Wall -Werror -Wextra 
+										#TODO:FIXME: FLAGS!!! #FIXME:TODO:
 SRCS := $(wildcard srcs/*.c)
 
 INCLUDES = includes
@@ -40,10 +40,10 @@ all : $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	@echo "$(BLUE)  ┓ •┓       ┓        "
-	@echo "$(BLUE)┏┓┣┓┓┃┏┓┏┏┓┏┓┣┓┏┓┏┓┏┓┏"
-	@echo "$(PURPLE)┣┛┛┗┗┗┗┛┛┗┛┣┛┛┗┗ ┛ ┗ ┛"
-	@echo "$(PURPLE)┛          ┛          $(RESET)"
+	@echo "$(BLUE)  ┓ •┓       ┓        $(ORANGE)  ┓        "
+	@echo "$(BLUE)┏┓┣┓┓┃┏┓┏┏┓┏┓┣┓┏┓┏┓┏┓┏$(ORANGE)  ┣┓┏┓┏┓┓┏┏"
+	@echo "$(PURPLE)┣┛┛┗┗┗┗┛┛┗┛┣┛┛┗┗ ┛ ┗ ┛$(GREEN)  ┗┛┗┛┛┗┗┛┛"
+	@echo "$(PURPLE)┛          ┛                      $(RESET)"
 
 $(OBJS_DIR)/srcs:
 	@mkdir -p $(OBJS_DIR)/srcs
@@ -53,9 +53,9 @@ $(OBJS_DIR)/%.o: %.c | $(OBJS_DIR)/srcs
 
 clean:
 	@rm -rf $(OBJS_DIR)
-	@echo "$(BLUE)┌────────────────────┐"
-	@echo "│    $(ORANGE)[✓] CLEANED!$(BLUE)    │"
-	@echo "$(BLUE)└────────────────────┘$(RESET)"
+	@echo "$(BLUE)┌────────────────────────────────┐"
+	@echo "│          $(ORANGE)[✓] CLEANED!$(BLUE)          │"
+	@echo "$(BLUE)└────────────────────────────────┘$(RESET)"
 
 fclean : clean
 	@rm -f $(NAME)
