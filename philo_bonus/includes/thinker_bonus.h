@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 19:02:04 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/11 02:18:58 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/12 00:37:45 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 # include <limits.h>
 # include <stdint.h>
 # include <sys/time.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
 # include <stdbool.h>
 # include <fcntl.h>
-# include <sys/stat.h>
 # include <semaphore.h>
 
 /* colors for action logs */
@@ -47,8 +48,8 @@ struct	s_table;
 /* each thinker is the node of the linked list */
 typedef struct s_thinker
 {
-	pid_t				idea;
 	int					id;
+	pid_t				pid;
 	int					meal_count;
 	uint64_t			last_meal;
 	struct s_table		*table;
@@ -78,18 +79,27 @@ int			parser(int ac, char **av);
 size_t		ft_strlen(const char *s);
 uint64_t	ft_atoi(const char *nptr);
 
+
+/* thinking process */
+void		organize_table(t_table *table);
+void		existence(t_thinker *thinker);
+void		wait_thinkers(t_table *table);
+
+/* thinker utils */
+int			table_init(t_table *table, int ac, char **av, int i);
+t_thinker	*ft_add_back(t_table *table, uint64_t i);
+void		log_action(t_thinker *thinker, char *action);
+
+/* actions */
+void		pick_up_forks(t_thinker *thinker);
+void		eat(t_thinker *thinker);
+void		put_down_forks(t_thinker *thinker);
+void		die(t_table *table, t_thinker *current, uint64_t timestamp);
+
 /* utils */
 void		*ft_calloc(size_t nmemb, size_t size);
 void		ft_bzero(void *s, size_t n);
 uint64_t	get_current_time(void);
 void		ft_usleep(uint64_t time);
-
-/* thinking process */
-void		organize_table(t_table *table);
-
-/* thinker utils */
-int			table_init(t_table *table, int ac, char **av, int i);
-t_thinker	*ft_add_back(t_table *table, uint64_t i);
-
 
 #endif

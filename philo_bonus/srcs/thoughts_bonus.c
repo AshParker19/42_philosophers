@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 01:10:19 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/11 02:42:56 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/12 00:40:33 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int	table_init(t_table *table, int ac, char **av, int i)
 	table->dead = false;
 	table->start_time = get_current_time();
 	table->thinker_num = ft_atoi(av[1]);
+	sem_unlink("/forks");
+	sem_unlink("/lock");
+	sem_unlink("/key");
 	table->forks = sem_open("/forks", O_CREAT, 0666, table->thinker_num);
 	table->lock = sem_open("/lock", O_CREAT, 0666, 1);
 	table->key = sem_open("/key", O_CREAT, 0666, 1);
@@ -62,24 +65,22 @@ void	log_action(t_thinker *thinker, char *action)
 {
 	uint64_t	timestamp;
 
-	// pthread_mutex_lock(&thinker->table->key);
 	if (!thinker->table->dead)
 	{
 		timestamp = get_current_time() - thinker->table->start_time;
 		printf (CYAN"%ld\t" GREEN"%d\t" RESET"%s\n",
 			timestamp, thinker->id, action);
 	}
-	// pthread_mutex_unlock(&thinker->table->key);
 }
 
-void	wait_thinkers(t_table *table) //wait
+void	wait_thinkers(t_table *table)
 {
 	t_thinker	*current;
 
 	current = table->first_thought;
 	while (current)
 	{
-		// pthread_join(current->idea, NULL);
+		waitpid(current->pid, NULL, 0);
 		current = current->next;
 	}
 }
