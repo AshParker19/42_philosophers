@@ -6,7 +6,7 @@
 /*   By: anshovah <anshovah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 01:50:04 by anshovah          #+#    #+#             */
-/*   Updated: 2023/09/12 00:43:20 by anshovah         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:41:44 by anshovah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,12 @@ void	existence(t_thinker *thinker)
 	{
 		if (thinker->table->dead)
 			break ;
+		sem_wait(thinker->table->key);	
 		pick_up_forks(thinker);
 		eat(thinker);
-		
+		put_down_forks(thinker);
+		ft_usleep(thinker->table->time_to_sleep);
+		log_action(thinker, THINK);
 	}
 	exit(1);
 }
