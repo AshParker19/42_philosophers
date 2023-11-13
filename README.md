@@ -1,10 +1,11 @@
 ## **_I never thought philosophy would be so deadly._**
+![Screenshot 2023-11-13 at 11 32 52](https://github.com/AshParker19/42_philosophers/assets/117525743/4bbcf55c-ec1c-42a1-9b92-4e01f6854639)
 
-## This project is about the famous dining philosophers problem. In order to solve this problem, I used the threads and mutexes concepts.
+### This project is about the famous dining philosophers problem. In order to solve this problem, I used the threads and mutexes concepts.
 
 ---
 
-## _The dining philosophers problem_ is a classic synchronization problem. It was originally formulated in 1965 by Edsger Dijkstra as a student exam exercise, presented in terms of computers competing for access to tape drive peripherals. Soon after, Tony Hoare gave the problem its present formulation.
+### _The dining philosophers problem_ is a classic synchronization problem. It was originally formulated in 1965 by Edsger Dijkstra as a student exam exercise, presented in terms of computers competing for access to tape drive peripherals. Soon after, Tony Hoare gave the problem its present formulation.
 
 #### The word `philosopher` was kind of too long for the variable name, and the word 'philo' was annoying me a lot for some reason, so in my program I have a word `thinker` instead, why not?:)
 
@@ -36,7 +37,7 @@ And now the concept of `mutex` takes it's place.
 ### `threads synchronization`
 Threads synchronization is a way to control the order of execution of threads. We can use mutexes to synchronize threads. For example, if we want to make sure that a thread A executes before a thread B, we can lock a mutex before the thread A and unlock the mutex after the thread A. Then, we can lock the mutex before the thread B and unlock the mutex after the thread B. In this case, the thread B will wait for the thread A to finish before it starts.
 
-### `Data races`
+### `data races`
 Data races are the situations when two or more threads are trying to access the same shared variable at the same moment of time.
 Thus, we need to protect the shared variables with mutexes. When the mutex is locked, no other thread can access the shared variable. So they will wait until the mutex is unlocked.
 
